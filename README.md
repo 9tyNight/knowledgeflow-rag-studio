@@ -2,6 +2,8 @@
 
 A polished portfolio demo showing a practical retrieval-augmented generation workspace for business documents.
 
+Live demo: https://9tynight.github.io/knowledgeflow-rag-studio/
+
 ## What it demonstrates
 
 - React interface for document Q&A
