@@ -155,8 +155,14 @@ function App() {
               {isFilterOpen && (
                 <div className="filter-popover" aria-label="Source filter options">
                   {sourceTypes.map((item) => (
-                    <button key={item} type="button" className={filter === item ? 'active' : ''} onClick={() => applyFilter(item)}>
-                      <span>{filter === item ? 'On' : ''}</span>
+                    <button
+                      key={item}
+                      type="button"
+                      className={filter === item ? 'active' : ''}
+                      aria-pressed={filter === item}
+                      onClick={() => applyFilter(item)}
+                    >
+                      <span className="filter-selected-dot" aria-hidden="true" />
                       {item}
                     </button>
                   ))}
