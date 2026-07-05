@@ -185,19 +185,6 @@ h1 {
   padding: 9px;
 }
 
-.filter-selected-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: transparent;
-  box-shadow: inset 0 0 0 1px #b9c7c4;
-}
-
-.filter-popover .active .filter-selected-dot {
-  background: #0f766e;
-  box-shadow: none;
-}
-
 .filter-popover .active {
   background: #e6fffb;
   color: #0f766e;

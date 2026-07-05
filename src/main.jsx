@@ -159,10 +159,8 @@ function App() {
                       key={item}
                       type="button"
                       className={filter === item ? 'active' : ''}
-                      aria-pressed={filter === item}
                       onClick={() => applyFilter(item)}
                     >
-                      <span className="filter-selected-dot" aria-hidden="true" />
                       {item}
                     </button>
                   ))}
