@@ -49,7 +49,7 @@ button { cursor: pointer; }
 .brand strong { font-size: 15px; color: #101828; }
 .brand span { font-size: 12px; color: #667085; margin-top: 2px; }
 
-.upload-button, .top-actions button, .askbar button {
+.upload-button, .top-actions button, .askbar button, .modal-action {
   border: 0;
   border-radius: 8px;
   display: inline-flex;
@@ -137,6 +137,17 @@ h1 {
   max-width: 620px;
 }
 
+.topbar .hero-line {
+  color: #0f766e;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.topbar .supporting-line {
+  color: #475467;
+  line-height: 1.55;
+}
+
 .top-actions { display: flex; gap: 10px; }
 .top-actions button {
   padding: 10px 12px;
@@ -146,6 +157,44 @@ h1 {
   white-space: nowrap;
 }
 .top-actions .primary { color: #ffffff; background: #0f766e; border-color: #0f766e; }
+
+.filter-menu {
+  position: relative;
+}
+
+.filter-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 190px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #dce8e5;
+  border-radius: 8px;
+  box-shadow: 0 14px 35px rgba(16, 24, 40, 0.14);
+}
+
+.filter-popover button {
+  justify-content: flex-start;
+  border: 0;
+  background: transparent;
+  padding: 9px;
+}
+
+.filter-popover button span {
+  width: 16px;
+  color: #0f766e;
+  font-weight: 900;
+}
+
+.filter-popover .active {
+  background: #e6fffb;
+  color: #0f766e;
+}
 
 .question-tabs {
   display: flex;
@@ -222,22 +271,33 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #b9ebe4;
+}
+
+.chat-panel.empty-state .message.answer > div {
+  border-color: #fed7aa;
+  background: #fffbeb;
 }
 
 .citations span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: #fff7ed;
   color: #9a3412;
-  border: 1px solid #fed7aa;
-  border-radius: 999px;
-  padding: 5px 9px;
+  border: 1px solid #fb923c;
+  border-radius: 8px;
+  padding: 7px 9px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+  box-shadow: 0 1px 0 rgba(154, 52, 18, 0.12);
 }
 
 .askbar {
   display: grid;
-  grid-template-columns: 22px 1fr auto;
+  grid-template-columns: 22px 1fr auto auto;
   align-items: center;
   gap: 10px;
   background: #ffffff;
@@ -257,6 +317,12 @@ h1 {
   background: #0f766e;
   color: #ffffff;
   padding: 9px 12px;
+}
+
+.askbar .sample-inline {
+  color: #344054;
+  background: #ffffff;
+  border: 1px solid #dce8e5;
 }
 
 .inspector-header {
@@ -293,9 +359,28 @@ h1 {
 }
 .chunk h2 { margin: 0; font-size: 14px; line-height: 1.2; letter-spacing: 0; }
 .chunk p { margin: 4px 0 9px; color: #667085; font-size: 12px; }
+.chunk blockquote {
+  margin: 0 0 10px;
+  padding-left: 10px;
+  border-left: 3px solid #76d9ce;
+  color: #344054;
+  font-size: 12px;
+  line-height: 1.45;
+}
 .chunk strong { font-size: 12px; color: #0f766e; }
 .meter { height: 6px; background: #edf2f1; border-radius: 999px; overflow: hidden; }
 .meter span { display: block; height: 100%; background: #0f766e; border-radius: inherit; }
+
+.no-chunks {
+  border: 1px dashed #fed7aa;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #7c2d12;
+  padding: 14px;
+}
+
+.no-chunks strong { display: block; margin-bottom: 6px; }
+.no-chunks p { margin: 0; line-height: 1.5; font-size: 13px; }
 
 .audit-box {
   margin-top: 18px;
@@ -308,16 +393,108 @@ h1 {
 .audit-box strong { display: block; margin-bottom: 6px; }
 .audit-box p { margin: 0; line-height: 1.5; font-size: 13px; }
 
+.built-with {
+  margin: 14px 0 0;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(24, 33, 47, 0.36);
+}
+
+.upload-modal {
+  position: relative;
+  width: min(440px, 100%);
+  background: #ffffff;
+  border: 1px solid #dce8e5;
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.25);
+}
+
+.upload-modal h2 {
+  margin: 0;
+  color: #101828;
+  font-size: 22px;
+  letter-spacing: 0;
+}
+
+.upload-modal p {
+  margin: 8px 0 16px;
+  color: #475467;
+  line-height: 1.55;
+}
+
+.close-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #dce8e5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #344054;
+}
+
+.dropzone {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  min-height: 150px;
+  margin-bottom: 16px;
+  border: 1px dashed #76d9ce;
+  border-radius: 8px;
+  background: #f0fdfa;
+  color: #0f766e;
+  text-align: center;
+}
+
+.dropzone span {
+  color: #475467;
+  font-size: 13px;
+}
+
+.modal-action {
+  width: 100%;
+  padding: 11px 14px;
+  color: #ffffff;
+  background: #0f766e;
+}
+
 @media (max-width: 1100px) {
   .app-shell { grid-template-columns: 240px 1fr; }
   .inspector { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #dce8e5; }
 }
 
+@media (max-width: 1320px) {
+  .topbar { flex-direction: column; }
+}
+
 @media (max-width: 760px) {
-  .app-shell { display: block; }
+  .app-shell { display: flex; flex-direction: column; }
+  .workspace { order: 1; }
+  .sidebar { order: 2; border-right: 0; border-top: 1px solid #dce8e5; }
+  .inspector { order: 3; }
   .sidebar, .workspace, .inspector { padding: 18px; }
   .topbar { flex-direction: column; }
   .top-actions { width: 100%; flex-wrap: wrap; }
+  .filter-menu, .filter-menu > button { width: 100%; }
+  .filter-popover { left: 0; right: auto; width: 100%; }
+  .askbar { grid-template-columns: 22px 1fr; }
+  .askbar button { width: 100%; }
+  .askbar .sample-inline { grid-column: 1 / -1; }
+  .askbar button[type="submit"] { grid-column: 1 / -1; }
   .chat-panel { min-height: 320px; }
   h1 { font-size: 23px; }
 }
